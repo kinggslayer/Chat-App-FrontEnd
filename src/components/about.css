@@ -1,0 +1,65 @@
+/* Dark theme container with background image */
+.about-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('D:/webd/chat-app/image chatapp.webp'); /* Replace with your image path */
+    background-size: cover; /* Ensures the image covers the entire container */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay to make text readable */
+  }
+  
+  /* Content section with dark background */
+  .about-content {
+    text-align: center;
+    background-color: rgba(30, 30, 30, 0.8); /* Darker background for content with some transparency */
+    color: white; /* White text for contrast */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow for depth */
+    max-width: 600px;
+  }
+  
+  h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #e0e0e0; /* Light gray for headings */
+  }
+  
+  h2 {
+    font-size: 1.8em;
+    margin-top: 30px;
+    color: #b0b0b0; /* Lighter gray for subheadings */
+  }
+  
+  p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    color: #d0d0d0; /* Lighter gray for paragraph text */
+  }
+  
+  .contact-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+  
+  .contact-list li {
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #d0d0d0; /* Lighter gray for contact items */
+  }
+  
+  /* Links styling for dark theme */
+  a {
+    color: #28a745; /* Green color for links */
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline; /* Adds underline on hover */
+  }
+  

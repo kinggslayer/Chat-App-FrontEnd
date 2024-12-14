@@ -1,0 +1,14 @@
+/* Ensures the main chat container occupies the full viewport height */
+.chat {
+    height: 100vh;
+}
+
+/* MessageList takes up all available space */
+.chat .cs-message-list {
+    flex: 1 1 auto;
+}
+
+/* MessageInput stays at the bottom */
+.chat .cs-message-input {
+    flex-shrink: 0;
+}

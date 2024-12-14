@@ -1,0 +1,70 @@
+.home-container {
+    background-image: url("D:/webd/chat-app/image chatapp.webp"); /* Use your image path */
+    background-size: cover; /* Ensures the image scales to cover the entire area */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    width: 90vw; /* Ensures it spans the full width of the viewport */
+    height: 100vh; /* Ensures it spans the full height of the viewport */
+    display: flex; /* Centers the content */
+    justify-content: center; /* Centers content horizontally */
+    align-items: center; /* Centers content vertically */
+    overflow: hidden; /* Ensures no scrollbars appear due to overflow */
+  }
+  
+  body {
+    background-color: #121212; /* Dark background for the body */
+    color: white; /* White text for contrast */
+    font-family: Arial, sans-serif; /* Set a font for better readability */
+    min-height: 100vh; /* Ensure the body spans the entire viewport */
+  }
+  .content {
+    text-align: left;
+    color: white;
+    background: transparent;
+    padding: 30px;
+    width: 50%;
+    margin-right: 50%;
+    margin-bottom: 400px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Adds shadow to text for readability */
+  }
+  
+  
+  h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+  }
+  
+  p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+  }
+  
+  .auth-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .btn {
+    padding: 15px 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .signup-btn {
+    background-color: #28a745; /* Green for Sign Up */
+    color: white;
+  }
+  
+  .login-btn {
+    background-color: #007bff; /* Blue for Log In */
+    color: white;
+  }
+  
+  .btn:hover {
+    opacity: 0.8;
+  }
+  
