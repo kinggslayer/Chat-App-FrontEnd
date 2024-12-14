@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Conversation, ConversationList, Sidebar as ChatSidebar, Avatar, MessageList, Message } from "@chatscope/chat-ui-kit-react";
+import {
+  Conversation,
+  ConversationList,
+  Sidebar as ChatSidebar,
+  Avatar,
+  MessageList,
+  Message,
+} from "@chatscope/chat-ui-kit-react";
 import useUsers from "./hooks/useGetUsers";
 import MessageInput from "./MessageInput";
+import io from "socket.io-client";
 import "./box.css";
 
 const CustomMessageList = ({ username, avatar }) => {
@@ -10,6 +18,7 @@ const CustomMessageList = ({ username, avatar }) => {
   const [messages, setMessages] = useState([]);
   const [activeChat, setActiveChat] = useState(null);
   const [activeChatId, setActiveChatId] = useState(null);
+  const [socket, setSocket] = useState(null);
 
   const host = "http://localhost:5000";
   const myuserId = localStorage.getItem("userId");
@@ -19,18 +28,40 @@ const CustomMessageList = ({ username, avatar }) => {
     setUserList(users);
   }, [users]);
 
-  // Fetch messages for active chat whenever activeChat or activeChatId changes
+  // Initialize Socket.IO connection
+  useEffect(() => {
+    const socketIo = io(host);
+    setSocket(socketIo);
+
+    // Clean up on component unmount
+    return () => {
+      if (socketIo) socketIo.disconnect();
+    };
+  }, []);
+
+  // Listen for incoming messages
+  useEffect(() => {
+    if (socket) {
+      socket.on("receive_message", (message) => {
+        if (message.receiver === myuserId || message.sender === myuserId) {
+          setMessages((prevMessages) => [...prevMessages, message]);
+        }
+      });
+    }
+  }, [socket, myuserId]);
+
+  // Fetch messages for active chat
   useEffect(() => {
     if (activeChatId) {
       const fetchMessages = async () => {
         try {
           const response = await fetch(
             `${host}/api/messages/${activeChatId}?senderId=${myuserId}`
-          ); // Pass senderId as query param
+          );
 
           const data = await response.json();
           if (response.ok) {
-            setMessages(data); // Assuming data contains the list of messages
+            setMessages(data);
           } else {
             console.error("Error fetching messages:", data.error || data.message);
           }
@@ -43,40 +74,21 @@ const CustomMessageList = ({ username, avatar }) => {
     }
   }, [activeChatId, myuserId]);
 
+  // Handle sending messages
+  const handleSendMessage = (messageContent) => {
+    if (socket && activeChatId) {
+      const message = {
+        sender: myuserId,
+        receiver: activeChatId,
+        content: messageContent,
+        createdAt: new Date().toISOString(),
+      };
 
-  const handleSendMessage = async (message) => {
-    try {
-      // Send message to backend
-      const response = await fetch(`${host}/api/messages`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          sender: myuserId,
-          receiver: activeChatId,
-          content: message,
-        }),
-      });
+      // Emit message via socket
+      socket.emit("send_message", message);
 
-      const json = await response.json();
-
-      if (response.ok) {
-        // On success, update messages state to include the new message
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          {
-            content: message,
-            sender: myuserId,
-            receiver: activeChatId,
-            createdAt: new Date().toISOString(),
-          },
-        ]);
-      } else {
-        console.error("Error sending message:", json.error || json.message);
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
+      // Optimistically update the UI with the new message
+      setMessages((prevMessages) => [...prevMessages, message]);
     }
   };
 
@@ -97,7 +109,12 @@ const CustomMessageList = ({ username, avatar }) => {
               name={user.username}
               onClick={() => {
                 setActiveChat(user.username);
-                setActiveChatId(user._id); // Set the active chat and ID
+                setActiveChatId(user._id);
+
+                // Join the room for the active chat
+                if (socket) {
+                  socket.emit("join_room", user._id);
+                }
               }}
             >
               <Avatar name={user.username} src={user.avatar} size="md" />
@@ -118,18 +135,21 @@ const CustomMessageList = ({ username, avatar }) => {
           <MessageList>
             {messages.map((message) => (
               <Message
-              key={message._id} // Use _id for unique key
-              model={{
-                message: message.content, // Use content as the message text
-                sentTime: new Date(message.createdAt).toLocaleString(), // Format the createdAt date to a readable format
-                sender: message.sender, // sender ID
-                direction: message.sender === myuserId ? "outgoing" : "incoming", // Direction based on whether the sender is the current user
-                position: "single", // You can change this depending on how you want the message displayed (e.g., "start" or "end")
-              }}
-            />
+                key={message.createdAt} // Use createdAt for unique key
+                model={{
+                  message: message.content,
+                  sentTime: new Date(message.createdAt).toLocaleString(),
+                  sender: message.sender,
+                  direction:
+                    message.sender === myuserId ? "outgoing" : "incoming",
+                  position: "single",
+                }}
+              />
             ))}
           </MessageList>
         </div>
+
+        {/* Message Input */}
         <MessageInput onSend={handleSendMessage} />
       </div>
     </div>
