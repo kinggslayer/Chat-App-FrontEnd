@@ -24,13 +24,10 @@ const CustomMessageList = ({ username, avatar }) => {
     if (activeChatId) {
       const fetchMessages = async () => {
         try {
-          const response = await fetch(`${host}/api/messages/${activeChatId}`, {
-            method: "GET",
-            body: JSON.stringify({
-              senderId:myuserId,
-              receiverId:activeChatId
-            })
-          });
+          const response = await fetch(
+            `${host}/api/messages/${activeChatId}?senderId=${myuserId}`
+          ); // Pass senderId as query param
+
           const data = await response.json();
           if (response.ok) {
             setMessages(data); // Assuming data contains the list of messages
@@ -45,6 +42,7 @@ const CustomMessageList = ({ username, avatar }) => {
       fetchMessages();
     }
   }, [activeChatId, myuserId]);
+
 
   const handleSendMessage = async (message) => {
     try {
