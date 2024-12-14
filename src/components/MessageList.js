@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Conversation, ConversationList, Sidebar as ChatSidebar, Avatar, MessageList, Message } from "@chatscope/chat-ui-kit-react";
 import useUsers from "./hooks/useGetUsers";
 import userMessages from "./hooks/useGetMessages";
+import MessageInput from "./MessageInput";
 import "./box.css";
 
 const CustomMessageList = ({ username, avatar }) => {
@@ -24,6 +25,18 @@ const CustomMessageList = ({ username, avatar }) => {
       setActiveChat(userList[0].username); // Set first user as active chat by default
     }
   }, [userList]);
+
+  const handleSendMessage = (messageText) => {
+    // const myId =User.findOne({username});
+    const newMessage = {
+      sender: username,
+      receiver:activeChat,
+      content: messageText,
+      direction: "outgoing",
+    };
+    setMessages([...messages, newMessage]);
+
+  };
 
   return (
     <div className="chat-app">
@@ -72,6 +85,7 @@ const CustomMessageList = ({ username, avatar }) => {
             ))}
           </MessageList>
         </div>
+        <MessageInput onSend={handleSendMessage} />
       </div>
     </div>
   );

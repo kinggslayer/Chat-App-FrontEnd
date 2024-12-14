@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -7,6 +7,15 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const host = "http://localhost:5000";
   let navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if user is already logged in (via token in localStorage)
+    const token = localStorage.getItem("token");
+    if (token) {
+      // If token exists, redirect to the chats page
+      navigate("/chats");
+    }
+  }, [navigate]);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -29,8 +38,15 @@ const Login = () => {
 
       if (json.success && json.token) {
         localStorage.setItem("token", json.token); // Store JWT token
-        alert("Successfullly Logged In");
-        navigate("/chats"); // Redirect to the homepage or dashboard
+        localStorage.setItem("userId", json.user._id);
+        localStorage.setItem("avatar", json.user.avatar);
+        localStorage.setItem("username", json.user.username);
+
+        // Refresh the page to reflect changes
+        window.location.reload();
+
+        alert("Successfully Logged In");
+        navigate("/chats"); // Redirect to the chats page after reload
       } else {
         setErrorMessage("Invalid email or password.");
       }
@@ -44,6 +60,10 @@ const Login = () => {
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  };
+
+  const handleSignUp = () => {
+    navigate("/signup"); // Redirect to the signup page
   };
 
   return (
@@ -85,6 +105,14 @@ const Login = () => {
           {loading ? "Logging in..." : "Submit"}
         </button>
       </form>
+
+      {/* Sign Up Button */}
+      <div className="signup-section mt-3">
+        <p className="text-muted">Don't have an account?</p>
+        <button className="btn btn-secondary" onClick={handleSignUp}>
+          Sign Up
+        </button>
+      </div>
     </div>
   );
 };
