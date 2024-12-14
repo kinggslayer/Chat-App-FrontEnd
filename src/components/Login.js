@@ -46,7 +46,7 @@ const Login = () => {
         window.location.reload();
 
         alert("Successfully Logged In");
-        navigate("/chats"); // Redirect to the chats page after reload
+        // navigate("/chats"); // Redirect to the chats page after reload
       } else {
         setErrorMessage("Invalid email or password.");
       }

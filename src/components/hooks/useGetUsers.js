@@ -5,6 +5,7 @@ const useUsers = () => {
   const [error, setError] = useState(null); // State to handle errors
   const [loading, setLoading] = useState(false); // State to manage loading status
   const host = "http://localhost:5000";
+  const myuserId= localStorage.getItem("userId");
 
   // Fetch user data from the API
   const getUsers = async () => {
@@ -23,7 +24,8 @@ const useUsers = () => {
       }
 
       const data = await response.json();
-      setUsers(data); // Update state with fetched data
+      const filteredUsers = data.filter(user => user._id !== myuserId);
+      setUsers(filteredUsers); // Update state with fetched data
       console.log("ok");
     } catch (error) {
       setError(error.message); // Set error state if something goes wrong
