@@ -1,9 +1,8 @@
-import './App.css';
-import './chat.css';
+import './components/css/App.css';
+import './components/css/chat.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Chat from "./components/Chat";
 import Navbar from "./components/Navbar";
-import Alert from "./components/Alert";
 import About from "./components/About";
 import Home from "./components/Home";
 import Login from "./components/Login";

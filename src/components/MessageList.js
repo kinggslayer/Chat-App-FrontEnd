@@ -10,7 +10,7 @@ import {
 import useUsers from "./hooks/useGetUsers";
 import MessageInput from "./MessageInput";
 import io from "socket.io-client";
-import "./box.css";
+import "./css/box.css";
 
 const CustomMessageList = ({ username, avatar }) => {
   const { users } = useUsers(); // Fetch users using the custom hook

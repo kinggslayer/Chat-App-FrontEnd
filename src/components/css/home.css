@@ -1,5 +1,5 @@
 .home-container {
-    background-image: url("D:/webd/chat-app/image chatapp.webp"); /* Use your image path */
+    background-image: url('D:/webd/chat-app/public/image chatapp.webp'); /* Use your image path */
     background-size: cover; /* Ensures the image scales to cover the entire area */
     background-position: center; /* Centers the image */
     background-repeat: no-repeat; /* Prevents the image from repeating */

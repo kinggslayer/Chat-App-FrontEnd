@@ -1,5 +1,5 @@
 import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
-import "../chat.css";
+import "./css/chat.css";
 import React from "react";
 import { Link } from "react-router-dom";
 import CustomMessageList from "./MessageList";

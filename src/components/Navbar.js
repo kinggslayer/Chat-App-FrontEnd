@@ -87,7 +87,7 @@ const Navbar = () => {
                   aria-expanded="false"
                 >
                   <img
-                    src={user.avatar || "https://via.placeholder.com/40"} // Fallback avatar
+                    src={user.avatar || "https://via.placeholder.com/40"}
                     alt="Avatar"
                     className="rounded-circle"
                     style={{ width: "40px", height: "40px", marginRight: "10px" }}

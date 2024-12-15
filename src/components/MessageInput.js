@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./messageinput.css";
+import "./css/messageinput.css";
 
 const MessageInput = ({ onSend }) => {
   const [message, setMessage] = useState("");
