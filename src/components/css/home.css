@@ -1,70 +1,121 @@
-.home-container {
-    background-image: url('D:/webd/chat-app/public/image chatapp.webp'); /* Use your image path */
-    background-size: cover; /* Ensures the image scales to cover the entire area */
-    background-position: center; /* Centers the image */
-    background-repeat: no-repeat; /* Prevents the image from repeating */
-    width: 90vw; /* Ensures it spans the full width of the viewport */
-    height: 100vh; /* Ensures it spans the full height of the viewport */
-    display: flex; /* Centers the content */
-    justify-content: center; /* Centers content horizontally */
-    align-items: center; /* Centers content vertically */
-    overflow: hidden; /* Ensures no scrollbars appear due to overflow */
+/* Dark Theme Variables */
+:root {
+  --bg-gradient-from: #1e293b; /* Dark navy */
+  --bg-gradient-to: #334155; /* Slate gray */
+  --card-bg: #1f2937; /* Charcoal */
+  --text-primary: #e2e8f0; /* Light gray */
+  --text-secondary: #94a3b8; /* Gray blue */
+  --button-bg-primary: #2563eb; /* Blue */
+  --button-hover-bg-primary: #1e40af; /* Darker blue */
+  --button-bg-secondary: #1f2937; /* Dark charcoal */
+  --button-hover-bg-secondary: #374151; /* Gray */
+  --icon-primary: #60a5fa; /* Light blue */
+  --icon-secondary: #34d399; /* Green */
+  --icon-tertiary: #a78bfa; /* Purple */
+  --border-color: #334155; /* Gray border */
+}
+
+/* Apply Dark Background */
+body {
+  background-color: var(--bg-gradient-from);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Main Container */
+.min-h-screen {
+  background: linear-gradient(to bottom right, var(--bg-gradient-from), var(--bg-gradient-to));
+}
+
+/* Headings */
+h1 {
+  color: var(--text-primary);
+}
+
+/* Paragraph Text */
+p {
+  color: var(--text-secondary);
+}
+
+/* Buttons */
+a {
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+}
+
+a.bg-blue-600 {
+  background: var(--button-bg-primary);
+  color: var(--text-primary);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+a.bg-blue-600:hover {
+  background: var(--button-hover-bg-primary);
+  transform: scale(1.05);
+}
+
+a.bg-white {
+  background: var(--button-bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+a.bg-white:hover {
+  background: var(--button-hover-bg-secondary);
+  transform: scale(1.05);
+}
+
+/* Cards */
+.grid > div {
+  background: var(--card-bg);
+  color: var(--text-primary);
+  border-radius: 1rem;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.grid > div:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.grid > div h3 {
+  color: var(--text-primary);
+}
+
+.grid > div p {
+  color: var(--text-secondary);
+}
+
+/* Icons */
+.w-12.h-12 {
+  transition: color 0.3s ease;
+}
+
+.w-12.h-12.text-blue-600 {
+  color: var(--icon-primary);
+}
+
+.w-12.h-12.text-green-600 {
+  color: var(--icon-secondary);
+}
+
+.w-12.h-12.text-purple-600 {
+  color: var(--icon-tertiary);
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .text-4xl {
+    font-size: 2rem;
   }
-  
-  body {
-    background-color: #121212; /* Dark background for the body */
-    color: white; /* White text for contrast */
-    font-family: Arial, sans-serif; /* Set a font for better readability */
-    min-height: 100vh; /* Ensure the body spans the entire viewport */
+
+  .text-xl {
+    font-size: 1rem;
   }
-  .content {
-    text-align: left;
-    color: white;
-    background: transparent;
-    padding: 30px;
-    width: 50%;
-    margin-right: 50%;
-    margin-bottom: 400px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Adds shadow to text for readability */
+
+  .px-8 {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
-  
-  
-  h1 {
-    font-size: 3em;
-    margin-bottom: 20px;
-  }
-  
-  p {
-    font-size: 1.2em;
-    margin-bottom: 30px;
-  }
-  
-  .auth-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-  .btn {
-    padding: 15px 30px;
-    font-size: 1.1em;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .signup-btn {
-    background-color: #28a745; /* Green for Sign Up */
-    color: white;
-  }
-  
-  .login-btn {
-    background-color: #007bff; /* Blue for Log In */
-    color: white;
-  }
-  
-  .btn:hover {
-    opacity: 0.8;
-  }
-  
+}

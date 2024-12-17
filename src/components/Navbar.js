@@ -104,8 +104,8 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/settings">
-                      Settings
+                    <Link className="dropdown-item" to="/reset-password">
+                      reset password
                     </Link>
                   </li>
                   <li>

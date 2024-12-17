@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Lock, Mail, AlertCircle, Loader2, Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
@@ -67,26 +66,26 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black dark:bg-black flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-gray-800 shadow-2xl rounded-3xl p-10 border border-gray-700 dark:border-gray-600">
+    <div className="min-vh-100 bg-gradient-dark d-flex align-items-center justify-content-center px-4 py-12">
+      <div className="card max-w-md w-100 shadow-lg rounded-4 p-5 border border-secondary bg-black">
         <div className="text-center">
-          <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-pink-400">
+          <h2 className="display-4 text-gradient text-primary">
             Welcome Back
           </h2>
-          <p className="mt-2 text-sm text-gray-400">Sign in to continue</p>
+          <p className="mt-2 text-light">Sign in to continue</p>
         </div>
 
         {errorMessage && (
-          <div className="bg-red-500/10 border border-red-500 text-red-400 px-4 py-3 rounded-lg flex items-center space-x-2 animate-shake">
-            <AlertCircle className="w-5 h-5 text-red-500" />
-            <span className="text-sm">{errorMessage}</span>
+          <div className="alert alert-danger d-flex align-items-center">
+            <i className="bi bi-exclamation-triangle-fill me-2"></i>
+            <span>{errorMessage}</span>
           </div>
         )}
 
-        <form className="mt-8 space-y-6" onSubmit={submit}>
-          <div className="space-y-4">
-            <div className="relative">
-              <Mail className="absolute inset-y-0 left-0 pl-3 w-5 h-5 text-gray-500 " />
+        <form className="mt-4" onSubmit={submit}>
+          <div className="mb-3">
+            <div className="position-relative">
+              <i className="bi bi-envelope position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
               <input
                 id="email"
                 name="email"
@@ -95,13 +94,15 @@ const Login = () => {
                 required
                 value={credentials.email}
                 onChange={onChange}
-                className="w-full px-3 py-3 pl-10 rounded-xl bg-gray-700 border border-gray-600 placeholder-gray-400 text-gray-100 focus:ring-2 focus:ring-indigo-500 outline-none transition duration-300"
+                className="form-control ps-5"
                 placeholder="Email address"
               />
             </div>
+          </div>
 
-            <div className="relative mt-4">
-              <Lock className="absolute inset-y-0 left-0 pl-3 w-5 h-5 text-gray-500" />
+          <div className="mb-3">
+            <div className="position-relative">
+              <i className="bi bi-lock position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
               <input
                 id="password"
                 name="password"
@@ -110,24 +111,25 @@ const Login = () => {
                 required
                 value={credentials.password}
                 onChange={onChange}
-                className="w-full px-3 py-3 pl-10 rounded-xl bg-gray-700 border border-gray-600 placeholder-gray-400 text-gray-100 focus:ring-2 focus:ring-indigo-500 outline-none transition duration-300"
+                className="form-control ps-5"
                 placeholder="Password"
               />
               <button
                 type="button"
                 onClick={togglePasswordVisibility}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-indigo-400 transition duration-300"
+                className="position-absolute top-50 end-0 translate-middle-y me-3 btn btn-link text-muted"
               >
-                {showPassword ? <EyeOff /> : <Eye />}
+                {showPassword ? (
+                  <i className="bi bi-eye-slash"></i>
+                ) : (
+                  <i className="bi bi-eye"></i>
+                )}
               </button>
             </div>
           </div>
 
-          <div className="flex justify-between items-center">
-            <a
-              href="/forgot"
-              className="text-sm text-indigo-400 hover:text-indigo-300 transition duration-300"
-            >
+          <div className="d-flex justify-content-between align-items-center">
+            <a href="/forgot-password" className="text-blue text-decoration-none">
               Forgot password?
             </a>
           </div>
@@ -135,11 +137,11 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="text-indigo-400 hover:text-indigo-300 transition duration-300 "
+            className="btn btn-outline-primary w-100 mt-3"
           >
             {loading ? (
-              <span className="flex items-center justify-center">
-                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+              <span className="d-flex align-items-center justify-content-center">
+                <i className="bi bi-arrow-clockwise me-2 animate-spin"></i>
                 Logging in...
               </span>
             ) : (
@@ -148,12 +150,12 @@ const Login = () => {
           </button>
         </form>
 
-        <div className="text-center mt-6">
-          <p className="text-gray-400 text-sm">
+        <div className="text-center mt-4">
+          <p className="text-light text-sm">
             Don't have an account?{" "}
             <button
               onClick={handleSignUp}
-              className="text-indigo-400 hover:text-indigo-300 transition duration-300"
+              className="btn btn-link text-primary"
             >
               Sign up
             </button>
@@ -162,6 +164,7 @@ const Login = () => {
       </div>
     </div>
   );
+
 };
 
 export default Login;
