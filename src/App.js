@@ -5,6 +5,7 @@ import Chat from './components/Chat';
 import Navbar from "./components/Navbar";
 import About from "./components/About";
 import Home from "./components/Home";
+import Profile from "./components/Profile";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import ForgotPassword from './components/ForgotPassword';
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/chats" element={<Chat />} />
+          <Route exact path="/profile" element={<Profile/>} />
           <Route exact path="/forgot-Password" element={<ForgotPassword />} />
           <Route exact path="/reset-password" element={<ResetPassword />} />
         </Routes>

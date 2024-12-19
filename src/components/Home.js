@@ -13,18 +13,18 @@ const Home = () => {
         <p className="text-lg md:text-xl text-gray-700 mb-10 max-w-2xl mx-auto leading-relaxed">
           Experience seamless real-time communication that bridges distances and brings people closer, effortlessly.
         </p>
-        
+
         <div className="flex flex-wrap justify-center gap-4 mb-12">
-          <Link 
-            to="/login" 
+          <Link
+            to="/login"
             className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-3 rounded-lg hover:scale-105 transform transition-all duration-300 flex items-center space-x-2 shadow-lg"
             aria-label="Start Chatting"
           >
             <MessageCircle className="w-5 h-5" />
             <span>Start Chatting</span>
           </Link>
-          <Link 
-            to="/signup" 
+          <Link
+            to="/signup"
             className="bg-white text-blue-600 px-8 py-3 rounded-lg border border-blue-300 hover:bg-blue-50 hover:scale-105 transform transition-all duration-300 flex items-center space-x-2 shadow-lg"
             aria-label="Create Account"
           >
@@ -32,7 +32,7 @@ const Home = () => {
             <span>Create Account</span>
           </Link>
         </div>
-        
+
         <div className="grid md:grid-cols-3 gap-8">
           <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transform transition-all duration-300">
             <MessageCircle className="w-12 h-12 text-blue-600 mx-auto mb-4" />

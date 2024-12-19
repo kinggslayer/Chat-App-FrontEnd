@@ -1,0 +1,83 @@
+.profile-page {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    color: #333;
+  }
+  
+  .profile-header h1 {
+    color: #0078D4;
+    margin-bottom: 20px;
+  }
+  
+  .profile-main {
+    margin: 0 auto;
+    max-width: 500px;
+  }
+  
+  .profile-card {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+  }
+  
+  .profile-name {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+  }
+  
+  .profile-email {
+    color: #666;
+    margin-bottom: 15px;
+  }
+  
+  .profile-bio {
+    font-style: italic;
+    color: #555;
+  }
+  
+  .profile-actions {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .update-button,
+  .logout-button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .update-button {
+    background-color: #0078D4;
+    color: white;
+  }
+  
+  .logout-button {
+    background-color: #FF5A5F;
+    color: white;
+  }
+  
+  .update-button:hover,
+  .logout-button:hover {
+    opacity: 0.9;
+  }
+  
+  .profile-footer {
+    margin-top: 40px;
+    font-size: 14px;
+    color: #666;
+  }
+  

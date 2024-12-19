@@ -26,7 +26,6 @@ const useUsers = () => {
       const data = await response.json();
       const filteredUsers = data.filter(user => user._id !== myuserId);
       setUsers(filteredUsers); // Update state with fetched data
-      console.log("ok");
     } catch (error) {
       setError(error.message); // Set error state if something goes wrong
     } finally {

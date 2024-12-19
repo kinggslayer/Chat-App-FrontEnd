@@ -7,7 +7,7 @@ const MessageInput = ({ onSend }) => {
   const handleSend = () => {
     if (message.trim()) {
       onSend(message); // Call the onSend function with the message
-      setMessage(""); // Clear the input field
+      setMessage("");
     }
   };
 

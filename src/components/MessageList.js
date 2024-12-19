@@ -1,125 +1,118 @@
-import React, { useState, useEffect } from "react";
+import React,{useEffect} from 'react';
 import {
   Conversation,
   ConversationList,
   Sidebar as ChatSidebar,
-  Avatar,
   MessageList,
   Message,
-} from "@chatscope/chat-ui-kit-react";
-import useUsers from "./hooks/useGetUsers";
-import MessageInput from "./MessageInput";
-import io from "socket.io-client";
-import "./css/box.css";
+  Avatar,
+  Button,
+} from '@chatscope/chat-ui-kit-react';
+import useUsers from './hooks/useGetUsers';
+import MessageInput from './MessageInput';
+import { useSocket } from './hooks/useSocket';
+import { useMessages } from './hooks/useMessages';
+import { useGroups } from './hooks/useGroups';
+import { useChat } from './hooks/useChat';
+import './css/box.css';
+import GroupModal from './GroupModal';
+console.log("Rendering CustomMessageList");
 
 const CustomMessageList = ({ username, avatar }) => {
-  const { users } = useUsers(); // Fetch users using the custom hook
-  const [userList, setUserList] = useState([]);
-  const [messages, setMessages] = useState([]);
-  const [activeChat, setActiveChat] = useState(null);
-  const [activeChatId, setActiveChatId] = useState(null);
-  const [socket, setSocket] = useState(null);
+  const host = 'http://localhost:5000';
+  const myUserId = localStorage.getItem('userId');
 
-  const host = "http://localhost:5000";
-  const myuserId = localStorage.getItem("userId");
+  const { users: userList } = useUsers();
+  const { socket, joinRoom, joinGroup, sendMessage } = useSocket(host);
+  const { activeChat, activeChatId, isGroupChat, setActiveConversation } = useChat();
+  const { messages, addMessage } = useMessages(host, activeChatId, isGroupChat, myUserId);
+  const {
+    groups,
+    showGroupModal,
+    newGroupName,
+    selectedMembers,
+    setShowGroupModal,
+    setNewGroupName,
+    setSelectedMembers,
+    createGroup,
+    updateGroup,
+  } = useGroups(host, myUserId);
 
-  // Update userList when `users` changes
-  useEffect(() => {
-    setUserList(users);
-  }, [users]);
-
-  // Initialize Socket.IO connection
-  useEffect(() => {
-    const socketIo = io(host);
-    setSocket(socketIo);
-
-    // Clean up on component unmount
-    return () => {
-      if (socketIo) socketIo.disconnect();
-    };
-  }, []);
-
-  // Listen for incoming messages
+  // Socket message listener
   useEffect(() => {
     if (socket) {
-      socket.on("receive_message", (message) => {
-        if (message.receiver === myuserId || message.sender === myuserId) {
-          setMessages((prevMessages) => [...prevMessages, message]);
+      socket.on('receive_message', (message) => {
+        if (
+          message.receiver === activeChatId ||
+          (isGroupChat && message.groupId === activeChatId)
+        ) {
+          addMessage(message);
         }
       });
+
+      socket.on('group_update', updateGroup);
     }
-  }, [socket, myuserId]);
+  }, [socket, myUserId, activeChatId]);
 
-  // Fetch messages for active chat
-  useEffect(() => {
-    if (activeChatId) {
-      const fetchMessages = async () => {
-        try {
-          const response = await fetch(
-            `${host}/api/messages/${activeChatId}?senderId=${myuserId}`
-          );
-
-          const data = await response.json();
-          if (response.ok) {
-            setMessages(data);
-          } else {
-            console.error("Error fetching messages:", data.error || data.message);
-          }
-        } catch (error) {
-          console.error("Error fetching messages:", error);
-        }
-      };
-
-      fetchMessages();
-    }
-  }, [activeChatId, myuserId]);
-
-  // Handle sending messages
   const handleSendMessage = (messageContent) => {
-    if (socket && activeChatId) {
-      const message = {
-        sender: myuserId,
-        receiver: activeChatId,
-        content: messageContent,
-        createdAt: new Date().toISOString(),
-      };
+    const message = isGroupChat?
+    {
+      groupId: activeChatId,
+      sender: myUserId,
+      content: messageContent,
+      createdAt: new Date().toISOString(),
+    }:
+    {
+      sender: myUserId,
+      receiver: activeChatId,
+      content: messageContent,
+      createdAt: new Date().toISOString(),
+    };
 
-      // Emit message via socket
-      socket.emit("send_message", message);
-
-      // Optimistically update the UI with the new message
-      setMessages((prevMessages) => [...prevMessages, message]);
-    }
+    sendMessage(message);
+    // addMessage(message);
   };
 
   return (
     <div className="chat-app">
-      {/* Sidebar */}
       <ChatSidebar position="left">
+        <div className="sidebar-header">
+          <Button onClick={() => setShowGroupModal(true)}>Create Group</Button>
+        </div>
+
         <ConversationList>
-          {/* Current User */}
-          <Conversation name={username}>
-            <Avatar name={username} src={avatar} size="md" />
-          </Conversation>
+          <div className="groups-section">
+            <h4>Groups</h4>
+            {groups.map((group) => (
+              <Conversation
+                key={group._id}
+                name={group.name}
+                info={`${group.members.length} members`}
+                onClick={() => {
+                  setActiveConversation(group.name, group._id, true);
+                  joinGroup(group._id);
+                }}
+              >
+                <Avatar name={group.name} src={group.avatar} size="md" />
+              </Conversation>
+            ))}
+          </div>
 
-          {/* Render Users from API */}
-          {userList.map((user) => (
-            <Conversation
-              key={user._id}
-              name={user.username}
-              onClick={() => {
-                setActiveChat(user.username);
-                setActiveChatId(user._id);
-
-                // Join the room for the active chat
-                if (socket) {
-                  socket.emit("join_room", user._id);
-                }
-              }}
-            >
-              <Avatar name={user.username} src={user.avatar} size="md" />
-            </Conversation>
-          ))}
+          <div className="direct-messages-section">
+            <h4>Direct Messages</h4>
+            {userList.map((user) => (
+              <Conversation
+                key={user._id}
+                name={user.username}
+                onClick={() => {
+                  setActiveConversation(user.username, user._id, false);
+                  joinRoom(user._id);
+                }}
+              >
+                <Avatar name={user.username} src={user.avatar} size="md" />
+              </Conversation>
+            ))}
+          </div>
         </ConversationList>
       </ChatSidebar>
 
@@ -135,13 +128,13 @@ const CustomMessageList = ({ username, avatar }) => {
           <MessageList>
             {messages.map((message) => (
               <Message
-                key={message.createdAt} // Use createdAt for unique key
+              key={`${message.createdAt}-${message.sender}-${message.content}`} // Use createdAt for unique key
                 model={{
                   message: message.content,
                   sentTime: new Date(message.createdAt).toLocaleString(),
                   sender: message.sender,
                   direction:
-                    message.sender === myuserId ? "outgoing" : "incoming",
+                    message.sender === myUserId ? "outgoing" : "incoming",
                   position: "single",
                 }}
               />
@@ -152,6 +145,19 @@ const CustomMessageList = ({ username, avatar }) => {
         {/* Message Input */}
         <MessageInput onSend={handleSendMessage} />
       </div>
+
+
+      {showGroupModal && (
+        <GroupModal
+          newGroupName={newGroupName}
+          setNewGroupName={setNewGroupName}
+          selectedMembers={selectedMembers}
+          setSelectedMembers={setSelectedMembers}
+          userList={userList}
+          createGroup={createGroup}
+          setShowGroupModal={setShowGroupModal}
+        />
+      )}
     </div>
   );
 };
