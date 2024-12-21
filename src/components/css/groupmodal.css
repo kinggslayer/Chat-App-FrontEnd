@@ -1,4 +1,4 @@
-/* Modal Styling */
+/* Modal Styling - Dark Theme with #34d399 Accent */
 .modal {
     position: fixed;
     top: 0;
@@ -8,146 +8,167 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.8); /* Darker overlay background */
     z-index: 1000;
     overflow: auto; /* Ensures scrolling if content overflows */
-  }
+}
   
-  .modal-content {
-    background-color: #fff;
+.modal-content {
+    background-color: #1e1e2f; /* Dark background for modal content */
     border-radius: 8px;
     padding: 20px;
     width: 100%;
-    max-width: 500px; /* Set a max width to make sure it doesn't stretch too wide */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow-y: auto; /* Allows vertical scrolling if content overflows */
-    max-height: 90vh; /* Limits height to 90% of the viewport height */
-  }
-  
-  h3 {
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Slight shadow for depth */
+    overflow-y: auto;
+    max-height: 90vh;
+    color: #f5f5f5; /* Light text color */
+}
+
+h3 {
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 15px;
-    text-align: center; /* Center the title */
-  }
-  
-  .form-group {
+    text-align: center;
+    color: #34d399; /* Accent color for the heading */
+}
+
+.form-group {
     margin-bottom: 15px;
-  }
-  
-  label {
+}
+
+label {
     font-size: 1rem;
     font-weight: 500;
     margin-bottom: 5px;
     display: block;
-  }
-  
-  input.form-control {
+    color: #cfcfcf; /* Muted light text for labels */
+}
+
+input.form-control {
     width: 100%;
     padding: 10px;
     font-size: 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid #444; /* Subtle border for input fields */
     border-radius: 4px;
     margin-top: 5px;
-    box-sizing: border-box; /* Ensures padding is included in the width calculation */
-  }
-  
-  .member-list {
+    box-sizing: border-box;
+    background-color: #2e2e3f; /* Dark input background */
+    color: #f5f5f5; /* Light input text */
+}
+
+input.form-control:focus {
+    border-color: #34d399; /* Accent border for focus */
+    outline: none;
+}
+
+.member-list {
     display: flex;
     flex-direction: column;
-    max-height: 300px; /* Limit height of the member list */
-    overflow-y: auto; /* Enable scrolling for large lists */
-  }
-  
-  .member-item {
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: #2e2e3f; /* Dark background for member list */
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.member-item {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
-  }
-  
-  .checkbox-container {
+    color: #f5f5f5;
+}
+
+.checkbox-container {
     display: flex;
     align-items: center;
     cursor: pointer;
-  }
-  
-  .checkbox-container input {
+    color: #f5f5f5;
+}
+
+.checkbox-container input {
     margin-right: 10px;
-  }
-  
-  .checkmark {
+}
+
+.checkmark {
     width: 16px;
     height: 16px;
     border-radius: 3px;
-    border: 1px solid #ccc;
+    border: 1px solid #444;
     display: inline-block;
     margin-right: 10px;
-  }
-  
-  .member-avatar {
+    background-color: #2e2e3f;
+}
+
+.checkmark:hover {
+    background-color: #34d399; /* Highlight on hover */
+}
+
+.member-avatar {
     margin-right: 10px;
-  }
-  
-  .member-name {
+}
+
+.member-name {
     font-size: 1rem;
     font-weight: 400;
-  }
-  
-  .modal-footer {
+    color: #cfcfcf;
+}
+
+.modal-footer {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
-  }
-  
-  .btn-primary,
-  .btn-secondary {
+}
+
+.btn-primary,
+.btn-secondary {
     padding: 10px 20px;
     font-size: 1rem;
     border-radius: 4px;
     cursor: pointer;
-  }
-  
-  .btn-primary {
-    background-color: #007bff;
+}
+
+.btn-primary {
+    background-color: #34d399; /* Accent button background */
     color: white;
     border: none;
     transition: background-color 0.3s ease;
-  }
-  
-  .btn-primary:hover {
-    background-color: #0056b3;
-  }
-  
-  .btn-secondary {
-    background-color: #f1f1f1;
-    color: #333;
+}
+
+.btn-primary:hover {
+    background-color: #2abf88; /* Darker shade for hover */
+}
+
+.btn-secondary {
+    background-color: #444;
+    color: #f5f5f5;
     border: none;
     transition: background-color 0.3s ease;
-  }
-  
-  .btn-secondary:hover {
-    background-color: #ddd;
-  }
-  
-  /* Make it responsive on smaller screens */
-  @media (max-width: 600px) {
+}
+
+.btn-secondary:hover {
+    background-color: #666;
+}
+
+/* Make it responsive on smaller screens */
+@media (max-width: 600px) {
     .modal-content {
-      padding: 15px;
-      width: 100%;
-      max-width: 90%;
+        padding: 15px;
+        width: 100%;
+        max-width: 90%;
     }
-  
+
     h3 {
-      font-size: 1.25rem;
+        font-size: 1.25rem;
     }
-  
+
     .btn-primary,
     .btn-secondary {
-      width: 48%; /* Buttons will be side by side on small screens */
-      margin: 5px;
+        width: 48%;
+        margin: 5px;
     }
-  
+
     .member-list {
-      max-height: 200px;
+        max-height: 200px;
     }
-  }
+}

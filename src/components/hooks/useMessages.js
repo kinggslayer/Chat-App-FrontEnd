@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 export const useMessages = (host, activeChatId, isGroupChat, myUserId) => {
   const [messages, setMessages] = useState([]);
+  const [groupMessages, setGroupMessages] = useState([]);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -16,7 +17,7 @@ export const useMessages = (host, activeChatId, isGroupChat, myUserId) => {
         const data = await response.json();
 
         if (response.ok) {
-          setMessages(data);
+          isGroupChat? setGroupMessages(data):setMessages(data);
         }
       } catch (error) {
         console.error('Error fetching messages:', error);
@@ -45,7 +46,10 @@ const addMessage = (message) => {
       return prevMessages;
     });
   };
+    const addgroupMessage = (message) => {
+    setGroupMessages(prevMessages => [...prevMessages, message]);
+  };
 
 
-  return { messages, addMessage };
+  return { messages, addMessage ,addgroupMessage,groupMessages};
 };

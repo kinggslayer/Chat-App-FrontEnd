@@ -23,9 +23,9 @@ const CustomMessageList = ({ username, avatar }) => {
   const myUserId = localStorage.getItem('userId');
 
   const { users: userList } = useUsers();
-  const { socket, joinRoom, joinGroup, sendMessage } = useSocket(host);
+  const { socket, joinRoom, joinGroup, sendMessage,sendgroupMessage } = useSocket(host);
   const { activeChat, activeChatId, isGroupChat, setActiveConversation } = useChat();
-  const { messages, addMessage } = useMessages(host, activeChatId, isGroupChat, myUserId);
+  const { messages, addMessage,addgroupMessage, groupMessages } = useMessages(host, activeChatId, isGroupChat, myUserId);
   const {
     groups,
     showGroupModal,
@@ -42,11 +42,12 @@ const CustomMessageList = ({ username, avatar }) => {
   useEffect(() => {
     if (socket) {
       socket.on('receive_message', (message) => {
-        if (
-          message.receiver === activeChatId ||
-          (isGroupChat && message.groupId === activeChatId)
-        ) {
+        if (message.receiver ===myUserId ) {
           addMessage(message);
+        }
+        if (isGroupChat && message.groupId === activeChatId && message.sender._id!== myUserId){
+          addgroupMessage(message);
+          console.log("yha")
         }
       });
 
@@ -55,13 +56,7 @@ const CustomMessageList = ({ username, avatar }) => {
   }, [socket, myUserId, activeChatId]);
 
   const handleSendMessage = (messageContent) => {
-    const message = isGroupChat?
-    {
-      groupId: activeChatId,
-      sender: myUserId,
-      content: messageContent,
-      createdAt: new Date().toISOString(),
-    }:
+    const message =
     {
       sender: myUserId,
       receiver: activeChatId,
@@ -70,8 +65,20 @@ const CustomMessageList = ({ username, avatar }) => {
     };
 
     sendMessage(message);
-    // addMessage(message);
+    addMessage(message);
   };
+  const handleSendgMessage = (messageContent)=>{
+    const message={
+      groupId: activeChatId,
+      sender: {
+        _id: myUserId,
+      },
+      content: messageContent,
+      createdAt: new Date().toISOString(),
+    }
+    sendgroupMessage(message);
+    addgroupMessage(message);
+  }
 
   return (
     <div className="chat-app">
@@ -126,24 +133,42 @@ const CustomMessageList = ({ username, avatar }) => {
         {/* Messages */}
         <div className="message-list-container">
           <MessageList>
-            {messages.map((message) => (
-              <Message
-              key={`${message.createdAt}-${message.sender}-${message.content}`} // Use createdAt for unique key
-                model={{
-                  message: message.content,
-                  sentTime: new Date(message.createdAt).toLocaleString(),
-                  sender: message.sender,
-                  direction:
-                    message.sender === myUserId ? "outgoing" : "incoming",
-                  position: "single",
-                }}
-              />
-            ))}
+            {
+              isGroupChat ? (
+                groupMessages.map((message) => (
+                  <Message
+                    key={`${message.createdAt}`}
+                    model={{
+                      message: message.content,
+                      sentTime: new Date(message.createdAt).toLocaleString(),
+                      // sender: message.sender,
+                      direction:
+                        message.sender._id === myUserId ? "outgoing" : "incoming",
+                      position: "single",
+                    }}
+                  />
+                ))
+              ) : (
+                messages.map((message) => (
+                  <Message
+                    key={`${message.createdAt}-${message.sender}-${message.content}`} 
+                    model={{
+                      message: message.content,
+                      sentTime: new Date(message.createdAt).toLocaleString(),
+                      sender: message.sender,
+                      direction:
+                        message.sender === myUserId ? "outgoing" : "incoming",
+                      position: "single",
+                    }}
+                  />
+                ))
+              )
+            }
           </MessageList>
         </div>
 
         {/* Message Input */}
-        <MessageInput onSend={handleSendMessage} />
+        <MessageInput onSend={isGroupChat? handleSendgMessage:handleSendMessage} />
       </div>
 
 

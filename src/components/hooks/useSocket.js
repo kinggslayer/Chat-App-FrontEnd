@@ -30,6 +30,11 @@ export const useSocket = (host) => {
       socket.emit('send_message', message);
     }
   };
+  const sendgroupMessage = (message) => {
+    if (socket) {
+      socket.emit('send_group_message', message);
+    }
+  };
 
-  return { socket, joinRoom, joinGroup, sendMessage };
+  return { socket, joinRoom, joinGroup, sendMessage,sendgroupMessage };
 };
