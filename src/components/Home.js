@@ -1,53 +1,34 @@
 import React from 'react';
-import { Link } from "react-router-dom";
-import { MessageCircle, Users, Shield } from 'lucide-react';
-import "./css/home.css";
+import './css/home.css'
 
-const Home = () => {
+const ChatAppHomepage = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-100 flex flex-col justify-center items-center px-4 py-16">
-      <div className="max-w-4xl text-center">
-        <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
-          Connect. Communicate. Collaborate.
-        </h1>
-        <p className="text-lg md:text-xl text-gray-700 mb-10 max-w-2xl mx-auto leading-relaxed">
-          Experience seamless real-time communication that bridges distances and brings people closer, effortlessly.
-        </p>
-
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          <Link
-            to="/login"
-            className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-3 rounded-lg hover:scale-105 transform transition-all duration-300 flex items-center space-x-2 shadow-lg"
-            aria-label="Start Chatting"
-          >
-            <MessageCircle className="w-5 h-5" />
-            <span>Start Chatting</span>
-          </Link>
-          <Link
-            to="/signup"
-            className="bg-white text-blue-600 px-8 py-3 rounded-lg border border-blue-300 hover:bg-blue-50 hover:scale-105 transform transition-all duration-300 flex items-center space-x-2 shadow-lg"
-            aria-label="Create Account"
-          >
-            <Users className="w-5 h-5" />
-            <span>Create Account</span>
-          </Link>
+    <div className="dark min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white p-4">
+      <div className="w-full max-w-md space-y-4">
+        <div className="text-center mb-6">
+          <h1 className="text-2xl font-bold text-white">Welcome to Chat App</h1>
         </div>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transform transition-all duration-300">
-            <MessageCircle className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-gray-800">Real-Time Messaging</h3>
-            <p className="text-gray-600">Stay connected with seamless instant communication on all devices.</p>
+        <div className="space-y-4">
+          <div>
+            <a href="/chats" className="w-full block">
+              <button className="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
+                Go to Chats
+              </button>
+            </a>
           </div>
-          <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transform transition-all duration-300">
-            <Users className="w-12 h-12 text-green-600 mx-auto mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-gray-800">Multi-User Chats</h3>
-            <p className="text-gray-600">Create groups and connect with friends, family, and teams effortlessly.</p>
+          <div>
+            <a href="/login" className="w-full block">
+              <button className="w-full bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
+                Go to Login
+              </button>
+            </a>
           </div>
-          <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transform transition-all duration-300">
-            <Shield className="w-12 h-12 text-purple-600 mx-auto mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-gray-800">Secure Communication</h3>
-            <p className="text-gray-600">Your conversations are protected with end-to-end encryption.</p>
+          <div>
+            <a href="/signup" className="w-full block">
+              <button className="w-full bg-purple-700 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
+                Go to Register
+              </button>
+            </a>
           </div>
         </div>
       </div>
@@ -55,4 +36,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default ChatAppHomepage;

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Avatar, Button } from '@chatscope/chat-ui-kit-react';
 import "./css/groupmodal.css";
 
 const GroupModal = ({
@@ -48,12 +47,15 @@ const GroupModal = ({
                       }}
                     />
                     <span className="checkmark"></span>
-                    <Avatar
-                      name={user.username}
-                      src={user.avatar}
-                      size="sm"
-                      className="member-avatar"
-                    />
+                    <div className="member-avatar">
+                      {user.avatar ? (
+                        <img src={user.avatar} alt={user.username} />
+                      ) : (
+                        <div className="avatar-placeholder">
+                          {user.username.charAt(0).toUpperCase()}
+                        </div>
+                      )}
+                    </div>
                     <span className="member-name">{user.username}</span>
                   </label>
                 </div>
@@ -63,16 +65,19 @@ const GroupModal = ({
         </div>
 
         <div className="modal-footer">
-          <Button
+          <button
             onClick={createGroup}
             disabled={!newGroupName.trim() || selectedMembers.length === 0}
             className="btn-primary"
           >
             Create Group
-          </Button>
-          <Button onClick={() => setShowGroupModal(false)} className="btn-secondary">
+          </button>
+          <button 
+            onClick={() => setShowGroupModal(false)} 
+            className="btn-secondary"
+          >
             Cancel
-          </Button>
+          </button>
         </div>
       </div>
     </div>

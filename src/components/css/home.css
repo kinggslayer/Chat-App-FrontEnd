@@ -1,4 +1,5 @@
 /* Dark Theme Variables */
+@import "tailwindcss";
 :root {
   --bg-gradient-from: #1e293b; /* Dark navy */
   --bg-gradient-to: #334155; /* Slate gray */

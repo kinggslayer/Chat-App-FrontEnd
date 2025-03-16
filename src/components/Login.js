@@ -12,7 +12,7 @@ const Login = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      navigate("/chats");
+      navigate("/chat-interface");
     }
   }, [navigate]);
 

@@ -1,0 +1,22 @@
+// File structure:
+- components/
+  - ChatInterface/
+    - index.jsx (main component)
+    - ChatHeader.jsx
+    - Sidebar/
+      - index.jsx
+      - ContactList.jsx
+      - GroupList.jsx
+      - UserStatusBadge.jsx
+    - MessageArea/
+      - index.jsx
+      - MessageList.jsx
+      - Message.jsx
+      - TypingIndicator.jsx
+    - InputArea/
+      - index.jsx
+      - AttachmentPreview.jsx
+      - MessageInput.jsx
+    - Modals/
+      - GroupModal.jsx
+    - ConnectionStatus.jsx
