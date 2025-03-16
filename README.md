@@ -16,7 +16,7 @@ This is the frontend for a real-time chat application built with **React**. The 
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/chat-app-frontend.git
+    git clone https://github.com/kinggslayer/Chat-app-Backend.git
     cd chat-app-frontend
     ```
 
@@ -52,6 +52,6 @@ The app will run on `http://localhost:3000`.
 ## Technologies Used
 - **React** for the frontend.
 - **@chatscope/chat-ui-kit-react** for the chat UI components.
-- **Axios** or **fetch** for HTTP requests.
+- **fetch** for HTTP requests.
 - **React Router** for routing between pages.
 - **JWT** for authentication handling.
